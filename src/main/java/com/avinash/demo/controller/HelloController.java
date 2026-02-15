@@ -12,8 +12,8 @@ public class HelloController {
 
     ChatClient chatClient;
 
-    public HelloController(ChatClient.Builder chatClientBuilder) {
-        this.chatClient = chatClientBuilder.build();
+    public HelloController(ChatClient chatClient) {
+        this.chatClient = chatClient;
     }
 
     @GetMapping("/chat")
@@ -28,11 +28,11 @@ public class HelloController {
     public String replyToMessage(@RequestParam("message") String messsage) {
         return chatClient
                 .prompt()
+                //Overrides the defaultSystem
                 .system("""
-                        You are in internal assistant to plan how to prepare for an interview aiming\s
-                        for the Software Engineer Role Along with AI having more than 4 Years of Experience\s
-                        If the user ask any thing outside this topic kindly inform them that you can only assist related\s
-                        to the preparation.\s
+                        You are an assistant to Generate a Quotes on life
+                        If the user ask any thing outside this topic kindly
+                        inform them that you can only assist related to quotes
                         """)
                 .user(messsage)
                 .call()
