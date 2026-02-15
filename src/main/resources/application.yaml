@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: demo
+  ai.model.chat: ollama
+  ai.ollama.chat.options.model: llama3.2:1b
