@@ -18,3 +18,15 @@
 * DefaultChatClientBuilder is a builder class for creating a ChatClient.
   It provides methods to set default values for various properties of the ChatClient.
 * `defaultSystem(), defaultUser(), defaultAdvisior()`
+
+## Prompt Templates
+
+* Using the prompt templates makes prompt construction easy.
+* Makes Prompt reusable and maintainable
+* Keeps the logic and the prompts cleanly seperated.
+* It supports parameterized placeHolders
+* Prompt templates can be store in `.st` file under resource folder
+* Using `@Value()` providing path of the .st file 
+
+`    @Value("classpath:/promptTemplates/userPromptTemplate.st")
+    Resource userPromptTemplate;`
