@@ -30,3 +30,17 @@
 
 `    @Value("classpath:/promptTemplates/userPromptTemplate.st")
     Resource userPromptTemplate;`
+
+## Prompt Stuffing
+* It is used only when we are feeding limited number of data to LLM.
+* In case if we have 100 or 200 pages of information in that case prompt stuffing will face some issues.
+### What are issues with Prompt Stuffing with unlimited data ?
+* Limitations of LLM Models (https://developers.openai.com/api/docs/models) Based on the modal being used if the input tokens increase greater than context window or if the output token is greater than max tokens gives an error.
+* **Billing** All the requests sending to LLM model are not free until unless you have your own LLM Model deployed locally by using models like Ollama   
+  * All the LLM Models charges based on the number of tokens that you are trying to consume.
+  * **Billing is = Input Tokens + OutPut Tokens**
+
+### What is token ?
+* LLM can only understand the number but not plain Language 
+* To check how Tokens are generated visit the website (https://platform.openai.com/tokenizer)
+* A one token is generally corresponds to ~4 characters of the text for common english text
