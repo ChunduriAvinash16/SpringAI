@@ -44,3 +44,49 @@
 * LLM can only understand the number but not plain Language 
 * To check how Tokens are generated visit the website (https://platform.openai.com/tokenizer)
 * A one token is generally corresponds to ~4 characters of the text for common english text
+
+### Advisors
+* In Spring AI Advisors are like middleware or interceptors for your prompt flow.
+* Advisors helps in pre-processing and post-processing the prompt data.
+* It helps to add custom logging and inject additional behavior without modifying core intention of the prompt
+* Advisors can be chained
+
+    **User -> Chat Client -> [Advisors] -> LLM -> Response -> [Advisors] -> User**
+
+* Some of the builtin Advisors are
+  * SafeGuardAdvisor
+  * SimpleLoggerAdvisor ... Custom Advisor
+* Any Advisors can implement CallAdvisor or StreamAdvisor or both depending upon the call
+  * Call Advisor : resulting in a call to an AI model
+  * Stream Advisor : streaming call to an AI mode
+* Every Advisor will have a variable called **order**. Which helps for which advisor should execute.
+  * Advisor with high order number will execute first 
+  * if both advisors have same order number it depends on how advisors from the chatClient
+  
+
+  Example of the Advise Call from Simple Logger Advisor
+
+    ```java
+    @Override
+    public ChatClientResponse adviseCall(ChatClientRequest chatClientRequest, CallAdvisorChain callAdvisorChain) {
+        //Logging the Request
+        logRequest(chatClientRequest); //logging the request
+
+        /**
+            If any more advisors need to called that is possible with callAdvisorChaining
+        **/
+        ChatClientResponse chatClientResponse = callAdvisorChain.nextCall(chatClientRequest); 
+
+        //Logging the response
+        logResponse(chatClientResponse);
+        
+        return chatClientResponse;
+    } 
+    ```
+
+#### Best Practice
+* Keep advisor as a stateless
+* if require chain the multiple advisors.
+* Don't modify the meaning of the prompt.
+* Use Advisors for cross-cutting concerns not core logic
+
