@@ -92,3 +92,14 @@
 * Don't modify the meaning of the prompt.
 * Use Advisors for cross-cutting concerns not core logic
 
+### Chat Options 
+* Chat options are configurable in Spring AI
+* It allows to customize hoe a LM behaves during chat/completion calls.
+* With the help of chatOptions you can set limits,adjust creativity, control response and so on
+* By default, Spring AI provides some key chat options at ```ChatOptions.java```
+* Model Specific Chat Options for example for Ollama chat model there is ```OllamaChatOptions.java``` and model has its own options.
+``` java
+ChatOptions chatOptions = ChatOptions.builder().model("llama3.2:1b")
+        .maxTokens(100).temperature(0.8).build();
+        
+```

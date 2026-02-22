@@ -8,3 +8,5 @@ logging:
   level:
     org.springframework.ai.chat.client.advisor : debug
     com.avinash.demo: debug
+
+#spring.ai.chat.options

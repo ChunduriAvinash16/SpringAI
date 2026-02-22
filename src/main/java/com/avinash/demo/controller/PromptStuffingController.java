@@ -1,6 +1,8 @@
 package com.avinash.demo.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.ollama.api.OllamaChatOptions;
+import org.springframework.ai.ollama.api.OllamaModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,7 @@ public class PromptStuffingController {
         return chatClient.prompt()
                 .system(systemPromptTemplate) //if the system is commented then defaultSystem
                 .user(message)
+                .options(OllamaChatOptions.builder().model(OllamaModel.LLAMA3_2_1B).build())
                 .call()
                 .content();
     }
