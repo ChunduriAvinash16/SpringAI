@@ -15,10 +15,8 @@ spring:
           jdbc:
             initialize-schema: always
             schema: classpath:schema/schema-h2.sql
-
 logging:
   level:
     org.springframework.ai.chat.client.advisor : debug
     com.avinash.demo: debug
-
 #spring.ai.chat.options
