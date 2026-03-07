@@ -103,3 +103,39 @@ ChatOptions chatOptions = ChatOptions.builder().model("llama3.2:1b")
         .maxTokens(100).temperature(0.8).build();
         
 ```
+
+### Chat Memory
+* By default LLM's are stateless
+* What is state less ? 
+  * LLM won't remember the conversation for example if i tell LLM i am leaving in bengaluru. then next if i as ask where i am leaving LLM will no idea where i am leaving.
+* To remember Spring AI provides a chat memory to store and manage the conversations.
+* These messages are stored using ChatMemoryRepository.
+* There are various memories strategies
+  * Keep last N messages
+  * Store message for specific time 
+  * Retain the message till the token limit is reached.
+* With Chat Memory LLM can behave more like a human, remembering the past to improve the response.
+```java
+    MessageWindowChatMemory implements ChatMemory Interface
+    MessageWindowChatMemory has a ChatMemoryRepositry (I) 
+    InMemoryChatMemoryRepository implements ChatMemoryRepository
+```
+* By default MessageWindowChatMemory Stores Max of 20 Messages
+* ![img.png](img.png)
+* Now the Question of how the Chat Client will remember ?
+  * Advisors is used to manage how memory is stored and reused across multiple interactions.
+  * Built In Advisors
+    * MessageChatMemoryAdvisor
+    * PromptChatMemoryAdvisor
+    * VectorStoreMemoryAdvisor
+    * When to use what
+    
+    | AdvisorType | Format | Use Case |
+    |--|--|--| 
+    |MessageChatMemoryAdvisor|Structured Message | Real-time Chat Memory|
+    |PromptChatMemoryAdvisor|Plain text|Token-optimized Conversation|
+    |VectorStoreMemoryAdvisor|Semantic Match|Long-term chats|
+  
+* By default, Chat Memory has default CONVERSATION_ID with "chat_memory_conversation_id"
+* Issue with this is if there is any application where multiple users are accessing the application. There might be a chance that Chat Memory might be updated with a new set of data.
+* So to solve this for example we can set a CONVERSATION_ID as the userName that can pass in the headers

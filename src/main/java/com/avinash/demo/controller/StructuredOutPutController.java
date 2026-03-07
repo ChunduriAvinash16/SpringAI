@@ -4,6 +4,7 @@ import com.avinash.demo.advisor.TokenUsageAuditAdvisor;
 import com.avinash.demo.model.CountryCities;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.converter.ListOutputConverter;
 import org.springframework.ai.converter.MapOutputConverter;
 import org.springframework.http.ResponseEntity;
