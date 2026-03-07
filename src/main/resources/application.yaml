@@ -3,6 +3,18 @@ spring:
     name: demo
   ai.model.chat: ollama
   ai.ollama.chat.options.model: llama3.2:1b
+  datasource:
+    url : jdbc:h2:file:C:\Users\HP\Downloads\demo\demo\chatmemory
+    driver-class-name: org.h2.Driver
+    username: admin
+    password: 123456
+  ai:
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: always
+            schema: classpath:schema/schema-h2.sql
 
 logging:
   level:

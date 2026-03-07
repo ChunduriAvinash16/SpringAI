@@ -138,4 +138,8 @@ ChatOptions chatOptions = ChatOptions.builder().model("llama3.2:1b")
   
 * By default, Chat Memory has default CONVERSATION_ID with "chat_memory_conversation_id"
 * Issue with this is if there is any application where multiple users are accessing the application. There might be a chance that Chat Memory might be updated with a new set of data.
-* So to solve this for example we can set a CONVERSATION_ID as the userName that can pass in the headers
+* So to solve this for example we can set a CONVERSATION_ID as the userName that can pass in the headers refer ```ChatMemoryController.java```
+* The problem with InMemoryChatMemoryRepository is Once the application restarts all the conversation is lost to overcome we can use database to store the conversations
+* Use JdbcChatMemoryRepository is a built-in implementation that uses JDBC to store messages in a relational
+  database. It supports multiple databases out-of-the-box and is suitable for applications that require
+  persistent storage of chat memory.

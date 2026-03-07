@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+chatmemory.mv.db
+chatmemory.trace.db
