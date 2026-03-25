@@ -15,8 +15,33 @@ spring:
           jdbc:
             initialize-schema: always
             schema: classpath:schema/schema-h2.sql
+    vectorstore:
+      qdrant:
+        initialize-schema: true
+        host: localhost
+        port: 6334
+        collection-name: springai
+  #      couchbase:
+#        bucket-name: springai
+#        index-name: spring-ai-document-index
+#        initialize-schema: true
+#  couchbase:
+#    connection-string: localhost
+#    username: Administrator
+#    password: 123456
+#    env:
+#      timeouts:
+#        query: 100s
+
+
+  docker:
+    compose:
+      stop:
+        command: down
 logging:
   level:
     org.springframework.ai.chat.client.advisor : debug
     com.avinash.demo: debug
 #spring.ai.chat.options
+
+
