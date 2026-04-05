@@ -18,7 +18,7 @@ public class ChatClientConfig {
                 .maxTokens(100).temperature(0.8).build();
         return chatClientBuilder
                 .defaultOptions(chatOptions)
-                .defaultAdvisors(List.of(new  SimpleLoggerAdvisor(), new TokenUsageAuditAdvisor()))
+                .defaultAdvisors(List.of(new SimpleLoggerAdvisor(), new TokenUsageAuditAdvisor()))
 //                .defaultAdvisors(new TokenUsageAuditAdvisor())
 //                .defaultAdvisors(new SimpleLoggerAdvisor())
                 .defaultSystem("""
