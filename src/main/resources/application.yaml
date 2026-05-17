@@ -17,9 +17,9 @@ spring:
             schema: classpath:schema/schema-h2.sql
     vectorstore:
       qdrant:
-        initialize-schema: true
-        host: localhost
-        port: 6334
+        initialize-schema: true #intialize the schema
+        host: localhost  #default
+        port: 6334 #default uses grpc protocol
         collection-name: springai
   #      couchbase:
 #        bucket-name: springai

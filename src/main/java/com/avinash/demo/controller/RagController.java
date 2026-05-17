@@ -21,7 +21,7 @@ public class RagController {
     private ChatClient chatClient;
     private VectorStore vectorStore;
 
-    public RagController(ChatClient chatClient, VectorStore vectorStore) {
+    public RagController(@Qualifier("chatMemoryExample") ChatClient chatClient, VectorStore vectorStore) {
         this.chatClient = chatClient;
         this.vectorStore = vectorStore;
     }
@@ -35,17 +35,28 @@ public class RagController {
     @GetMapping("/random/chat")
     public ResponseEntity<String> randomChat(@RequestHeader("username") String userName,
                                              @RequestParam("message") String message){
-        SearchRequest searchRequest = SearchRequest.builder().query(message).topK(3).similarityThreshold(0.5).build();
+        System.out.println("From the random Chat");
+        SearchRequest searchRequest = SearchRequest.builder()
+                .query(message)
+                .topK(3) //top 3 documents
+                .similarityThreshold(0.5) //probability more than 50%
+                .build();
+        //querying the vector Store
         List<Document> similarDocs = vectorStore.similaritySearch(searchRequest);
+
+        //Joining the Strings
         String similarContext = similarDocs.stream().map(Document::getText)
                 .collect(Collectors.joining(System.lineSeparator()));
 
+        //Calling the LLM Model
         String answer = chatClient.prompt().system(
                         promptSystemSpec -> promptSystemSpec.text(promptTemplates)
                                 .param("documents", similarContext))
                 .advisors(a -> a.param(CONVERSATION_ID, userName))
                 .user(message)
-                .call().content();
+                .call()
+                .content();
+
         return ResponseEntity.ok(answer);
     }
 
@@ -53,7 +64,9 @@ public class RagController {
     @GetMapping("/document/chat")
     public ResponseEntity<String> documentChat(@RequestHeader("username") String userName,
                                              @RequestParam("message") String message){
-        SearchRequest searchRequest = SearchRequest.builder().query(message).topK(3).similarityThreshold(0.5).build();
+
+        SearchRequest searchRequest = SearchRequest.builder().query(message).topK(2)
+                .similarityThreshold(0.5).build();
         List<Document> similarDocs = vectorStore.similaritySearch(searchRequest);
         String similarContext = similarDocs.stream().map(Document::getText)
                 .collect(Collectors.joining(System.lineSeparator()));
